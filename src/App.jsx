@@ -3,17 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, 
   Recycle, 
-  X,
-  Eye,
-  Sliders,
-  Copy,
-  Check,
-  Send,
-  Scissors,
-  Layers,
-  ShieldCheck,
-  ArrowUpRight,
-  Maximize2
+  X, 
+  Eye, 
+  Sliders, 
+  Copy, 
+  Check, 
+  Send, 
+  Scissors, 
+  Layers, 
+  ShieldCheck, 
+  ArrowUpRight, 
+  Maximize2 
 } from 'lucide-react';
 
 function InstagramIcon({ className = "w-4 h-4" }) {
@@ -30,17 +30,13 @@ function InstagramIcon({ className = "w-4 h-4" }) {
 function CantaAkademiEmblem({ className = "w-8 h-8 text-[#556B4E]" }) {
   return (
     <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Çanta Sapı */}
-      <path d="M36 34C36 24 42 16 50 16C58 16 64 24 64 34" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-      {/* Çanta Gövdesi */}
-      <path d="M24 38H76L82 72C82 75 79 78 75 78H25C21 78 18 75 18 72L24 38Z" fill="currentColor" />
-      {/* Dikiş İzi (Beyaz Kesikli Çizgi) */}
-      <path d="M22 62C30 63 36 67 44 71" stroke="#FAF7F2" strokeWidth="3.5" strokeDasharray="5 4" strokeLinecap="round" />
-      <path d="M52 73C58 74 65 72 72 65" stroke="#FAF7F2" strokeWidth="3.5" strokeDasharray="5 4" strokeLinecap="round" />
-      {/* İğne (Beyaz Hat) */}
-      <path d="M72 44L44 72" stroke="#FAF7F2" strokeWidth="4" strokeLinecap="round" />
-      {/* İğne Deliği / İplik */}
-      <path d="M68 40C72 36 78 40 74 46C70 52 64 62 72 66" stroke="#FAF7F2" strokeWidth="3" strokeLinecap="round" />
+      <circle cx="50" cy="50" r="48" fill="#FAF7F2" stroke="#556B4E" strokeWidth="3"/>
+      <path d="M37 36C37 26 43 18 50 18C57 18 63 26 63 36" stroke="#556B4E" strokeWidth="5" strokeLinecap="round" />
+      <path d="M26 40H74L79 72C79 75 76 77 73 77H27C24 77 21 75 21 72L26 40Z" fill="#556B4E" />
+      <path d="M24 64C31 65 37 68 44 71" stroke="#FAF7F2" strokeWidth="3" strokeDasharray="4 3" strokeLinecap="round" />
+      <path d="M52 73C58 74 65 72 71 66" stroke="#FAF7F2" strokeWidth="3" strokeDasharray="4 3" strokeLinecap="round" />
+      <path d="M72 46L44 72" stroke="#FAF7F2" strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M68 42C72 38 77 42 74 47C71 52 65 61 72 65" stroke="#FAF7F2" strokeWidth="2.5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -48,6 +44,7 @@ function CantaAkademiEmblem({ className = "w-8 h-8 text-[#556B4E]" }) {
 // 1. DİL SÖZLÜĞÜ (TR / EN)
 const TRANSLATIONS = {
   tr: {
+    pageTitle: "Çanta Akademi | İleri Dönüşüm Atölyesi",
     tickerWorkshop: "İSTANBUL ATÖLYESİ • CANLI ZANAAT",
     tickerRecovered: "Geri Kazanılan Paket",
     navTransform: "Dönüşümün Gücü",
@@ -118,6 +115,7 @@ const TRANSLATIONS = {
     inquiryCustom: "Özel Koleksiyon Talebi"
   },
   en: {
+    pageTitle: "Çanta Akademi | Upcycling Atelier",
     tickerWorkshop: "ISTANBUL ATELIER • LIVE CRAFTSMANSHIP",
     tickerRecovered: "Upcycled Packages",
     navTransform: "Power of Transformation",
@@ -362,6 +360,22 @@ export default function App() {
 
   const activeMaterial = materials.find(m => m.id === activeMaterialId) || materials[0];
 
+  // Sekme Başlığı & Favicon'u Kod Üzerinden Otomatik Enjekte Etme
+  useEffect(() => {
+    document.title = t.pageTitle;
+    
+    // Otomatik SVG Favicon Tanımlaması
+    const svgFavicon = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="%23FAF7F2" stroke="%23556B4E" stroke-width="4"/><path d="M37 36C37 26 43 18 50 18C57 18 63 26 63 36" stroke="%23556B4E" stroke-width="5" stroke-linecap="round"/><path d="M26 40H74L79 72C79 75 76 77 73 77H27C24 77 21 75 21 72L26 40Z" fill="%23556B4E"/><path d="M24 64C31 65 37 68 44 71" stroke="%23FAF7F2" stroke-width="3" stroke-dasharray="4 3"/><path d="M52 73C58 74 65 72 71 66" stroke="%23FAF7F2" stroke-width="3" stroke-dasharray="4 3"/><path d="M72 46L44 72" stroke="%23FAF7F2" stroke-width="3.5" stroke-linecap="round"/><path d="M68 42C72 38 77 42 74 47C71 52 65 61 72 65" stroke="%23FAF7F2" stroke-width="2.5" stroke-linecap="round"/></svg>`;
+    
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
+    link.href = svgFavicon;
+  }, [lang, t.pageTitle]);
+
   // Instagram Hop-Up Alert State
   const [inquiryModal, setInquiryModal] = useState({
     isOpen: false,
@@ -402,7 +416,7 @@ export default function App() {
   return (
     <div className="bg-[#FAF7F2] text-[#1E1C1A] min-h-screen selection:bg-[#556B4E] selection:text-white font-sans antialiased overflow-x-hidden">
       
-      {/* 1. ÜST BİLGİ & CANLI SAYAÇ (Sultangazi silindi, İstanbul Atölyesi eklendi) */}
+      {/* 1. ÜST BİLGİ & CANLI SAYAÇ */}
       <div className="bg-[#1C1A18] text-[#E8DFC8] px-4 sm:px-8 lg:px-12 py-2 text-xs flex items-center justify-between font-mono tracking-tight">
         <div className="flex items-center gap-2.5">
           <span className="w-2 h-2 rounded-full bg-[#7D9D74] animate-ping" />
@@ -428,26 +442,13 @@ export default function App() {
         </div>
       </div>
 
-      {/* 2. LOGOLU VE GENİŞLETİLMİŞ NAVBAR */}
+      {/* 2. LOGOLU VE FERAH NAVBAR */}
       <header className="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-xl border-b border-[#E3DAC8] px-4 sm:px-8 lg:px-12 py-3.5 flex items-center justify-between gap-6">
         
         {/* LOGO & MARKA KİMLİĞİ */}
         <a href="#" className="flex items-center gap-3.5 shrink-0 group">
-          {/* Çanta Akademi Özel Logosu */}
           <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#556B4E] shadow-sm bg-[#FAF7F2] flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform">
-            <img 
-              src="/canta-akademi-logo.png" 
-              alt="Çanta Akademi Logo" 
-              onError={(e) => {
-                // Eğer görsel dosya henüz kopyalanmadıysa hazır vektörel amblem devrede
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-              className="w-full h-full object-contain"
-            />
-            <div className="hidden w-full h-full items-center justify-center">
-              <CantaAkademiEmblem className="w-8 h-8 text-[#556B4E]" />
-            </div>
+            <CantaAkademiEmblem className="w-full h-full text-[#556B4E]" />
             <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#556B4E] rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">✓</span>
           </div>
 
@@ -461,7 +462,7 @@ export default function App() {
           </div>
         </a>
 
-        {/* ORTA MENÜ LİNKLERİ (Ferah, Sıkışmayan Yapı) */}
+        {/* ORTA MENÜ LİNKLERİ */}
         <nav className="hidden xl:flex items-center gap-8 2xl:gap-10 text-xs font-bold uppercase tracking-[0.16em] text-stone-600">
           <a href="#donusum" className="hover:text-[#556B4E] transition-colors flex items-center gap-1.5 whitespace-nowrap">
             <span className="text-[#556B4E] font-mono">01.</span> {t.navTransform}
@@ -480,7 +481,6 @@ export default function App() {
         {/* SAĞ TARAF: TR/EN DİL SEÇİCİ & DM BUTONU */}
         <div className="flex items-center gap-3 shrink-0">
           
-          {/* TR / EN DİL BUTONU */}
           <div className="flex items-center bg-[#ECE4D4] border border-[#D5C9B4] rounded-full p-1 text-xs font-mono font-bold shadow-xs">
             <button
               onClick={() => setLang('tr')}
@@ -504,7 +504,6 @@ export default function App() {
             </button>
           </div>
 
-          {/* DM BUTONU */}
           <button 
             onClick={() => handleOpenInquiry(t.inquiryCustom)}
             className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#1C1A18] hover:bg-[#556B4E] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md active:scale-95 whitespace-nowrap"
@@ -517,17 +516,15 @@ export default function App() {
 
       </header>
 
-      {/* 3. HERO: EDİTORYAL POSTER MİZANPAJ */}
+      {/* 3. HERO POSTER */}
       <section className="relative px-6 lg:px-12 pt-8 pb-20 max-w-7xl mx-auto overflow-hidden">
         
-        {/* Arkada silüet arka plan tipografisi */}
         <div className="absolute top-4 left-0 right-0 flex justify-center pointer-events-none select-none opacity-5">
           <span className="font-serif text-[18vw] font-black leading-none text-black tracking-tighter">RE-CRAFT</span>
         </div>
 
         <div className="relative z-10 grid lg:grid-cols-12 gap-10 items-center pt-4 sm:pt-8">
           
-          {/* Sol Kolon */}
           <div className="lg:col-span-7 space-y-7">
             
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#EFE8DC] border border-[#DDD3C2] text-xs font-bold text-stone-800">
@@ -562,7 +559,6 @@ export default function App() {
               </a>
             </div>
 
-            {/* Sayaçlar */}
             <div className="pt-8 border-t-2 border-[#E3DAC8] grid grid-cols-3 gap-6">
               <div>
                 <span className="font-serif text-3xl sm:text-4xl font-black text-stone-900 block leading-tight">450+</span>
@@ -580,7 +576,6 @@ export default function App() {
 
           </div>
 
-          {/* Sağ Kolon: Sanat Kolajı */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md">
               
@@ -599,13 +594,11 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Yüzen Polaroid Kartı 1 */}
               <div className="absolute -top-6 -right-6 w-36 aspect-square rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-white rotate-6 hidden sm:block">
                 <img src="/IMG_5789.JPG" alt="Texture 02" className="w-full h-full object-cover" />
                 <span className="absolute bottom-1 right-2 text-[9px] font-mono font-bold text-stone-700 bg-white/90 px-1 rounded">DOKU #02</span>
               </div>
 
-              {/* Yüzen Polaroid Kartı 2 */}
               <div className="absolute -bottom-6 -left-6 w-40 aspect-square rounded-2xl overflow-hidden border-4 border-white shadow-2xl bg-white -rotate-6 hidden sm:block">
                 <img src="/IMG_4444.PNG" alt="Embroidery 03" className="w-full h-full object-cover" />
                 <span className="absolute bottom-1 left-2 text-[9px] font-mono font-bold text-stone-700 bg-white/90 px-1 rounded">NAKIŞ #03</span>
@@ -617,9 +610,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* =========================================================================
-          4. DÖNÜŞÜMÜN GÜCÜ (BEFORE / AFTER KARŞILAŞTIRMASI)
-      ========================================================================= */}
+      {/* 4. DÖNÜŞÜMÜN GÜCÜ (BEFORE / AFTER) */}
       <section id="donusum" className="py-24 px-6 lg:px-12 bg-[#EFE8DC] border-y-2 border-[#E0D5C3] relative">
         <div className="max-w-7xl mx-auto space-y-12">
           
@@ -641,7 +632,6 @@ export default function App() {
           <div className="relative max-w-5xl mx-auto">
             <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border-8 border-white shadow-2xl select-none bg-stone-300">
               
-              {/* After: Bitmiş Çanta */}
               <img 
                 src="/IMG_5787.JPG" 
                 alt="Bitmiş Çanta" 
@@ -651,7 +641,6 @@ export default function App() {
                 {t.transAfter}
               </div>
 
-              {/* Before: Katlanmış Ambalaj Şeritleri */}
               <div 
                 className="absolute inset-y-0 left-0 overflow-hidden"
                 style={{ width: `${sliderPos}%` }}
@@ -667,7 +656,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Sürgü Çizgisi & Kolu */}
               <div 
                 className="absolute inset-y-0 w-1.5 bg-white cursor-ew-resize flex items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.5)]"
                 style={{ left: `${sliderPos}%` }}
@@ -677,7 +665,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Sürgü Inputu */}
               <input 
                 type="range" 
                 min="0" 
@@ -688,7 +675,6 @@ export default function App() {
               />
             </div>
 
-            {/* Slider Açıklama Rozetleri */}
             <div className="grid sm:grid-cols-3 gap-4 mt-6">
               <div className="p-4 rounded-2xl bg-white border border-[#DDD3C2] shadow-xs text-xs">
                 <span className="font-mono font-bold text-[#556B4E] block mb-1">{t.transCard1Title}</span>
@@ -708,9 +694,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* =========================================================================
-          5. MALZEME LABORATUVARI (MATERIAL STUDIO)
-      ========================================================================= */}
+      {/* 5. MALZEME LABORATUVARI */}
       <section id="laboratuvar" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           
@@ -723,7 +707,6 @@ export default function App() {
               {t.labDesc}
             </p>
 
-            {/* Malzeme Seçim Sekmeleri */}
             <div className="space-y-3 pt-2">
               {materials.map((mat) => (
                 <button
@@ -745,7 +728,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Sağ: Canlı Kart */}
           <div className="lg:col-span-7">
             <div className="p-8 sm:p-10 rounded-3xl bg-white border-4 border-[#1C1A18] shadow-2xl relative space-y-6">
               <div className="flex items-center justify-between border-b border-stone-200 pb-4">
@@ -776,9 +758,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* =========================================================================
-          6. ESERLER & LOOKBOOK
-      ========================================================================= */}
+      {/* 6. LOOKBOOK & ESERLER */}
       <section id="koleksiyon" className="py-24 px-6 lg:px-12 bg-white border-y-2 border-[#E0D5C3]">
         <div className="max-w-7xl mx-auto space-y-16">
           
@@ -792,7 +772,6 @@ export default function App() {
             </p>
           </div>
 
-          {/* Kartlar */}
           <div className="grid md:grid-cols-2 gap-12">
             {products.map((p) => (
               <div 
@@ -808,7 +787,6 @@ export default function App() {
                     </span>
                   </div>
 
-                  {/* Fotoğraf Sahnesi */}
                   <div 
                     onClick={() => setSelectedProduct(p)}
                     className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-stone-200 cursor-pointer shadow-inner border border-stone-300"
@@ -825,7 +803,6 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Metinler */}
                   <div className="space-y-3">
                     <h3 className="font-serif text-3xl font-black text-stone-900 group-hover:text-[#556B4E] transition-colors">
                       {p.title}
@@ -834,7 +811,6 @@ export default function App() {
                       {p.desc}
                     </p>
 
-                    {/* Metrikler */}
                     <div className="grid grid-cols-3 gap-2 py-2 border-y border-[#D4C7B2] text-center font-mono text-[11px]">
                       <div>
                         <span className="text-stone-500 block">{t.specPackaging}</span>
@@ -861,7 +837,6 @@ export default function App() {
 
                 </div>
 
-                {/* Aksiyon */}
                 <div className="p-6 sm:p-8 pt-0 border-t border-[#E0D5C3] flex items-center gap-3">
                   <button 
                     onClick={() => handleOpenInquiry(p.title)}
@@ -887,9 +862,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* =========================================================================
-          7. ZANAAT METODOLOJİSİ (4 ADIMDA SANAT)
-      ========================================================================= */}
+      {/* 7. ZANAAT METODOLOJİSİ */}
       <section id="metodoloji" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#556B4E]">{t.methodBadge}</span>
@@ -934,9 +907,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* =========================================================================
-          8. INSTAGRAM ÇAĞRISI
-      ========================================================================= */}
+      {/* 8. INSTAGRAM ÇAĞRISI */}
       <section className="py-20 px-6 lg:px-12 bg-[#EFE8DC] border-t-2 border-[#E0D5C3]">
         <div className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-14 bg-white border-4 border-[#1C1A18] shadow-2xl text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EFE8DC] border border-[#DDD3C2] text-xs font-bold text-[#556B4E]">
@@ -976,9 +947,7 @@ export default function App() {
         <p className="font-mono text-stone-600 font-medium">{t.footerCopyright}</p>
       </footer>
 
-      {/* =========================================================================
-          HOP-UP ALERT MODAL (INSTAGRAM DM BİLDİRİMİ)
-      ========================================================================= */}
+      {/* HOP-UP ALERT MODAL */}
       <AnimatePresence>
         {inquiryModal.isOpen && (
           <div 
@@ -1047,9 +1016,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* =========================================================================
-          BÜYÜK GÖRSEL & DETAY MODAL
-      ========================================================================= */}
+      {/* BÜYÜK GÖRSEL & DETAY MODAL */}
       <AnimatePresence>
         {selectedProduct && (
           <div 
